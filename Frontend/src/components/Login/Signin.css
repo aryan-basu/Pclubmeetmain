@@ -1,0 +1,110 @@
+.main-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 80%;
+    padding: 1rem;
+    margin: 1rem 0;
+    overflow: hidden;
+}
+
+.card {
+    padding: 1rem;
+    width: 300px;
+    margin: auto;
+    padding: 0rem;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: #f1f1f1;
+    box-shadow: 0px 0px 5px rgba(55, 175, 75, .5);
+}
+
+.form {
+    width: 75%;
+    margin: 0 auto;
+    padding: 0rem;
+}
+
+.form form {
+    width: fit-content;
+    margin: auto;
+}
+
+.form .input {
+    width: auto;
+    margin: 1rem 2rem;
+}
+
+.card h1 {
+    margin-top: 0rem;
+    background: #37AF4B;
+    padding: 1rem;
+    margin: 0rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 28px;
+}
+
+.card .btn {
+    width: fit-content;
+    margin: 0rem 2.25rem;
+    margin-bottom: 1rem;
+    background: #37AF4B;
+    color: white;
+    margin-left: 11.3rem;
+}
+
+.signup {
+    padding: .5rem 0;
+    padding-left: 2rem;
+    padding-right: .5rem;
+    font-size: 13px;
+    font-weight: bold;
+    color: #37AF4B;
+    width: 100%;
+}
+
+a {
+    color: #37AF4B;
+}
+
+.input .icons {
+    color: #016236;
+    background: #fff;
+}
+
+.desc {
+    width: 50%;
+    padding: 0 5rem;
+    font-size: 20px;
+}
+
+@media screen and (max-width: 430px) {
+    .main-body {
+        width: 100%;
+        margin: 0rem;
+        padding: 0rem;
+        flex-direction: column;
+    }
+    .main-body .desc,
+    .main-body .card {
+        width: 100%;
+    }
+    .main-body .desc h2,
+    .main-body .desc p {
+        font-size: .75rem;
+        margin: .5rem;
+    }
+    .main-body .desc h2 {
+        margin-top: 3rem;
+    }
+    .main-body .card {
+        margin: .5rem;
+        width: 90%;
+    }
+    .main-body .card h1 {
+        font-size: 20px;
+    }
+}
+
+@media screen and (min-width: 720px) {}

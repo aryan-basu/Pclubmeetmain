@@ -1,0 +1,44 @@
+.home {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.lines {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.line-1 {
+    width: 110px;
+    height: 1px;
+    background: #000;
+}
+
+.input-btn {
+    background: #37AF4B!important;
+    color: white!important;
+    cursor: pointer;
+    border-radius: 5%!important;
+}
+
+.input-icons {
+    font-size: 1rem;
+}
+
+.btn-meet {
+    display: flex;
+    align-items: center;
+    background: #37AF4B!important;
+    color: white!important;
+    font-weight: bold!important;
+}
+
+.btn-icon {
+    margin: 0 .5rem;
+    font-size: 1rem;
+    font-weight: bold!important;
+}
