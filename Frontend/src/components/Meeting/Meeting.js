@@ -88,7 +88,8 @@ const Meeting = (props) => {
         const myPeer = new Peer(undefined, { // initialzing my peer object
             host: 'pclub-meet-backend.herokuapp.com',
             port: '443',
-            path: '/peerjs'
+            path: '/peerjs',
+            secure : true
         })
         
 
