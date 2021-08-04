@@ -10,50 +10,60 @@ import Input from '@material-ui/core/Input'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { IoCopySharp } from 'react-icons/io5'
 import Button from '@material-ui/core/Button'
-import styled from "styled-components";
 import Axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import firebase from 'firebase';
 
 
 
-const Preview = () => {
+const Preview = (props) => {
 
     //states & ref's
     const history = useHistory();
+    const location = useLocation();
+    //const location = useLocation();
     const [roomId, setroomId] = useState('');
     const myVideo = useRef()
- 
+
 
     //firebase
     var user = firebase.auth().currentUser;
-    if(user===null)
-    {
-      history.push('/');
+    if (user === null) {
+        history.push('/');
     }
     //initial mounting
     useEffect(() => {
-        
-        navigator.mediaDevices.getUserMedia({ 
-            video: true, 
+
+        navigator.mediaDevices.getUserMedia({
+            video: true,
             audio: true
-         }).then(stream => {
-            if( myVideo.current ){
+        }).then(stream => {
+            if (myVideo.current) {
                 myVideo.current.srcObject = stream
             }
         })
 
 
-        Axios.get('https://pclub-meet-backend.herokuapp.com/join').then( res => {
-            setroomId(res.data.link)
-            const inputLink = document.getElementById('input-with-icon-adornment text')    
-            inputLink.value = res.data.link
-        } )
-        .catch( (err) => console.log(err) )
+        if ( location.state.isInitiator ) {
+
+            Axios.get('https://pclub-meet-backend.herokuapp.com/join').then(res => {
+                setroomId(res.data.link)
+                const inputLink = document.getElementById('input-with-icon-adornment text')
+                inputLink.value = res.data.link
+            })
+            .catch((err) => console.log(err))
+
+        }
+
+        else{
+            setroomId(location.state.roomId)
+            const inputLink = document.getElementById('input-with-icon-adornment text')
+            inputLink.value = location.state.roomId
+        }
 
     }, []); // passing location here ALERT
 
-    
+
 
     //handle button join
     const handleJoin = () => {
@@ -61,9 +71,9 @@ const Preview = () => {
         const newPath = '/meeting/' + roomId
 
         history.push({
-            pathname : newPath
+            pathname: newPath
         })
-    } 
+    }
 
     return (
         <div>
@@ -71,7 +81,7 @@ const Preview = () => {
                 <h1 className='heading'>Room #1</h1>
                 <Card className='card'>
                     <CardContent className='video'>
-                        <video  autoPlay muted ref = {myVideo}/>
+                        <video autoPlay muted ref={myVideo} />
                     </CardContent>
                     <CardActions className='card-buttons'>
                         <IconButton size="medium" className='preview-icon'>
@@ -91,13 +101,13 @@ const Preview = () => {
                         id="input-with-icon-adornment text"
                         endAdornment={
                             <InputAdornment position="end" >
-                                <IconButton onClick = {() => {navigator.clipboard.writeText(roomId)} } >
+                                <IconButton onClick={() => { navigator.clipboard.writeText(roomId) }} >
                                     <IoCopySharp />
                                 </IconButton>
                             </InputAdornment>
                         }
                     />
-                    <Button onClick = {handleJoin} className='btn'>Join Meet</Button>
+                    <Button onClick={handleJoin} className='btn'>Join Meet</Button>
                 </div>
             </div>
         </div>

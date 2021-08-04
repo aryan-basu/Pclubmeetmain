@@ -9,35 +9,52 @@ import { RiAddBoxLine } from 'react-icons/ri'
 import { useHistory } from 'react-router-dom';
 import firebase from 'firebase';
 const Home = (props) => {
+
     const history = useHistory();
     let textInput = React.createRef();
     var user = firebase.auth().currentUser;
     var fullname, email;
     if (user !== null) {
-        fullname =user.displayName.split(' ')[0];
+        fullname = user.displayName.split(' ')[0];
         email = user.email;
     }
-   
 
-   
+
+
     async function handleLogout() {
         await firebase.auth().signOut();
         history.push("/");
     };
 
-    function handlejoin() {
-     const code=textInput.current.value;
-     if(code!=null)
-     {
-         history.push('/meeting/'+code)
-     }
-      }
+    const handleNewMeet = () => { // Creating a meeting
+
+        history.push({ 
+            pathname: '/preview', 
+            state : {
+                isInitiator : true
+            }
+        })
+    }
+
+
+    const handlejoin = () => {  // joining a meeting
+        const code = textInput.current.value;
+        if (code != null) {
+            history.push({
+                pathname: '/preview',
+                state: {
+                   isInitiator : false,
+                   roomId : code
+                }
+            })
+        }
+    }
     return (
         <div>
             <div className="home">
                 <h4>Welcome {fullname} !</h4>
-         
-                <input type="text" ref={textInput} placeholder="Enter Meeting code" /> 
+
+                <input type="text" ref={textInput} placeholder="Enter Meeting code" />
                 <button onClick={handlejoin}>Join meet</button>
                 <div className='lines'>
                     <div className='line-1'></div>
@@ -45,7 +62,7 @@ const Home = (props) => {
                     <div className='line-1'></div>
                 </div>
 
-                <Button onClick={() => { history.push({ pathname: '/preview' }) }} fullWidth={true} className='btn-meet'>
+                <Button onClick={handleNewMeet} fullWidth={true} className='btn-meet'>
                     <InputAdornment>
                         <RiAddBoxLine className='btn-icon' />
                     </InputAdornment>
