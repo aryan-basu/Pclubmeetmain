@@ -1,19 +1,101 @@
 .meeting-main {
     position: relative;
     top: 150px;
+    height: auto;
+    left: 0;
+    width: 100%;
+    padding: 5rem 0rem;
+    overflow: hidden;
 }
 
 .meeting-main #video-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 300px);
-    grid-auto-rows: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    background: black;
+    width: 100%;
+    height: 90vh;
+    flex-flow: wrap;
 }
 
 .meeting-main video {
-    width: 100%;
-    height: 100%;
+    width: auto;
+    height: auto;
     object-fit: cover;
-    box-shadow: 0px 0px 5px rgb(55, 175, 75, .5);
-    border: 1px solid black;
-    background: black;
+    box-shadow: 0px 0px 5px rgb(55, 175, 75, .5), inset 0px 0px 5px rgba(0, 0, 0, 0.5);
+    margin: 1rem;
+    border-radius: 1rem;
+    background: white;
+}
+
+.meeting-main .medias {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: .5rem;
+}
+
+.MuiTab-textColorPrimary.Mui-selected {
+    color: #37AF4B!important;
+}
+
+.PrivateTabIndicator-colorPrimary-3 {
+    background-color: var(--green)!important;
+    width: auto!important;
+}
+
+#chats {
+    width: 350px!important;
+    background-color: #fff;
+    position: absolute!important;
+    top: 50%;
+    right: 5%;
+    height: 70vh;
+}
+
+.media-icon {
+    padding: 1rem;
+    font-size: 1.25rem;
+    color: white;
+    background: #37AF4B;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.media-icon.one,
+.media-icon.two,
+.media-icon.six,
+.media-icon.seven {
+    width: 20px;
+    height: 20px;
+    margin: .25rem;
+    border-radius: 50%;
+}
+
+.media-icon.three {
+    padding: 1rem;
+    padding-left: 2rem;
+    border-bottom-left-radius: 2rem;
+    border-top-left-radius: 2rem;
+}
+
+.media-icon.five {
+    padding: 1rem;
+    padding-right: 2rem;
+    border-bottom-right-radius: 2rem;
+    border-top-right-radius: 2rem;
+}
+
+#send {
+    border-radius: 0!important;
+    color: #37AF4B;
+}
+
+.display {
+    height: 54vh;
+}
+
+.chat-input input {
+    width: 100%;
 }
