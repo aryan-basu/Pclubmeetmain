@@ -138,7 +138,7 @@ const Meeting = (props) => {
     return (
         <div>
             <div className="meeting-main">
-                <div id="video-grid">
+                <div id="video-grid" ref = {videoGrid} >
                 </div>
                 <div className='medias'>
                     <div>
