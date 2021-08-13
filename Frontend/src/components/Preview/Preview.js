@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button'
 import Axios from 'axios';
 import { useHistory, useLocation } from 'react-router-dom';
 import firebase from 'firebase';
+import Header from '../Header/Header';
 
 
 
@@ -77,6 +78,7 @@ const Preview = (props) => {
 
     return (
         <div>
+             <Header/>
             <div className="preview-main">
                 <h1 className='heading'>Room #1</h1>
                 <Card className='card'>

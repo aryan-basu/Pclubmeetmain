@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, BrowserRouter } from "react-router-dom";
 import Header from './components/Header/Header';
 import Signin from './components/Login/Signin'
 import Signup from './components/Signup/Signup';
@@ -54,10 +54,16 @@ class App extends React.Component{
   }
   render(){
 
+    
   return (
+  
     <div>
-      <Header currentUser={this.state.currentUser}/>
+    
+  
+   
+
       <Router>
+     
         <Switch>
           <Route path='/' exact component={Signin} />
           <Route path='/signin' exact component={Signin} />
@@ -68,6 +74,7 @@ class App extends React.Component{
           <Route path='/preview' exact component={Preview} />
         </Switch>
       </Router>
+    
     </div>
   );
   }

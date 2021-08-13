@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton'
 import { RiAddBoxLine } from 'react-icons/ri'
 import { useHistory } from 'react-router-dom';
 import firebase from 'firebase';
+import Header from '../Header/Header';
 const Home = (props) => {
 
     const history = useHistory();
@@ -51,6 +52,7 @@ const Home = (props) => {
     }
     return (
         <div>
+             <Header />
             <div className="home">
                 <h4>Welcome {fullname} !</h4>
 

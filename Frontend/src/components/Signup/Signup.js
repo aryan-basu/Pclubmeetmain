@@ -10,6 +10,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import './Signup.css'
 import '../Login/Signin.css'
 import '../Login/Signin'
+import Header from '../Header/Header';
 import { auth,createUserProfileDocument } from '../../firebase/firebase.utils';
 import { withRouter } from 'react-router-dom';
 class Signup extends React.Component{
@@ -32,7 +33,12 @@ handleSubmit=async event=>{
     }
     try {
         const {user}=await auth.createUserWithEmailAndPassword(email,password);
-        createUserProfileDocument(user,{displayName});
+
+        await user.updateProfile({
+            displayName : displayName
+        });
+
+        await createUserProfileDocument(user,{displayName});
         this.setState({
             displayName:'',
             email:'',
@@ -53,7 +59,11 @@ handleChange=event=>{
 render(){
     const {displayName,email,password,confirmPassword}=this.state;
     return (
+        <div>
+            <Header currentUser={this.state.currentUser}/>
+    
         <div className="signup-card">
+             
             <FormControl className='form' onSubmit={this.handleSubmit} autoComplete="off">
                 <h1>Sign Up</h1>
                 <form  onSubmit={this.handleSubmit}>
@@ -125,6 +135,7 @@ render(){
                         href='Signin'>Signin</a>
                 </p>
             </FormControl>
+        </div>
         </div>
     );
 }

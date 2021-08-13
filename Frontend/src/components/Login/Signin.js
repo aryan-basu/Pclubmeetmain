@@ -11,7 +11,7 @@ import firebase from 'firebase';
 import { useHistory } from 'react-router';
 import { auth } from '../../firebase/firebase.utils';
 import { withRouter } from 'react-router-dom';
-
+import Header from '../Header/Header';
 
 
 class Signin extends React.Component  {
@@ -70,7 +70,9 @@ handleChange=event=>{
     };
     const {email,password}=this.state;
     return (
+    
         <div>
+              <Header currentUser={this.state.currentUser}/>
             <div className="main-body">
                     <div className="desc">
                         <h2>Introducing a free and secure video calling service accessible for all.</h2>
