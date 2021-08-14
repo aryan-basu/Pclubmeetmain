@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button'
 import Axios from 'axios';
 import { useHistory, useLocation } from 'react-router-dom';
 import firebase from 'firebase';
+import Header from '../Header/Header';
 
 
 
@@ -24,6 +25,11 @@ const Preview = (props) => {
     //const location = useLocation();
     const [roomId, setroomId] = useState('');
     const myVideo = useRef()
+    //stream
+    const [stream,setStream] = useState();
+    //states of audio & video
+    const [audioState,setAudioState] = useState(true);
+    const [videoState,setVideoState] = useState(true);
 
 
     //firebase
@@ -31,6 +37,37 @@ const Preview = (props) => {
     if (user === null) {
         history.push('/');
     }
+
+    //audio
+    const handleAudioClick = () => {
+        const enabled = stream.getAudioTracks()[0].enabled;
+        if( enabled ){
+            stream.getAudioTracks()[0].enabled = false;
+            setAudioState(false)
+            //render html
+        }
+        else{
+            stream.getAudioTracks()[0].enabled = true;
+            setAudioState(true)
+            //render html
+        }
+    }
+
+    //video
+    const handleVideoClick = () => {
+        const enabled = stream.getVideoTracks()[0].enabled;
+        if( enabled ){
+            stream.getVideoTracks()[0].enabled = false;
+            setVideoState(false)
+            //render html
+        }
+        else{
+            stream.getVideoTracks()[0].enabled = true;
+            setVideoState(true)
+            //render html
+        }
+    }
+
     //initial mounting
     useEffect(() => {
 
@@ -38,6 +75,7 @@ const Preview = (props) => {
             video: true,
             audio: true
         }).then(stream => {
+            setStream(stream)
             if (myVideo.current) {
                 myVideo.current.srcObject = stream
             }
@@ -61,6 +99,9 @@ const Preview = (props) => {
             inputLink.value = location.state.roomId
         }
 
+        // const videoButton = document.querySelector('#videoButton')
+        // videoButton.addEventListener('click', () => console.log('clicked'))
+
     }, []); // passing location here ALERT
 
 
@@ -71,23 +112,28 @@ const Preview = (props) => {
         const newPath = '/meeting/' + roomId
 
         history.push({
-            pathname: newPath
+            pathname: newPath,
+            state: {
+                currentAudioState : audioState,
+                currentVideoState : videoState
+            }
         })
     }
 
     return (
         <div>
+             <Header/>
             <div className="preview-main">
                 <h1 className='heading'>Room #1</h1>
                 <Card className='card'>
                     <CardContent className='video'>
-                        <video autoPlay muted ref={myVideo} />
+                        <video autoPlay ref={myVideo} />
                     </CardContent>
                     <CardActions className='card-buttons'>
-                        <IconButton size="medium" className='preview-icon'>
+                        <IconButton size="medium" className='preview-icon' onClick = { handleAudioClick } >
                             <BiMicrophone />
                         </IconButton>
-                        <IconButton size="medium" className='preview-icon'>
+                        <IconButton size="medium" className='preview-icon' onClick = { handleVideoClick } >
                             <IoVideocamOutline />
                         </IconButton>
                     </CardActions>
