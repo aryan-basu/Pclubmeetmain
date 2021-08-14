@@ -3,13 +3,14 @@ import './Meeting.css'
 import Peer from 'peerjs';
 import { io } from 'socket.io-client';
 import firebase from 'firebase';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import TabPanel from './TabPanel'
 
 const Meeting = (props) => {
 
     //firebase
     const history = useHistory();
+    const location = useLocation();
     var user = firebase.auth().currentUser;
     if (user === null) {
         history.push('/');
@@ -17,20 +18,47 @@ const Meeting = (props) => {
     //states
     const [peers, setPeers] = useState({})
     const [myId, setMyId] = useState('');
+    const [stream, setStream] = useState();
 
     //setting up my video
     const videoGrid = useRef();
     const myVideo = document.createElement('video')
-    myVideo.muted = true
+    //myVideo.muted = location.state.currentAudioState
 
     //helper function to add stream to video element
     const addVideoStream = (video, stream) => {
         video.srcObject = stream
-        video.addEventListener('loadedmetadata', () => {
-            video.play()
+        video.addEventListener('loadedmetadata', () => { //alert
+            video.play() 
         })
         if (videoGrid.current)
             videoGrid.current.append(video);
+    }
+
+    //audio
+    const handleAudioClick = () => {
+        const enabled = stream.getAudioTracks()[0].enabled;
+        if( enabled ){
+            stream.getAudioTracks()[0].enabled = false;
+            //render html
+        }
+        else{
+            stream.getAudioTracks()[0].enabled = true;
+            //render html
+        }
+    }
+
+    //video
+    const handleVideoClick = () => {
+        const enabled = stream.getVideoTracks()[0].enabled;
+        if( enabled ){
+            stream.getVideoTracks()[0].enabled = false;
+            //render html
+        }
+        else{
+            stream.getVideoTracks()[0].enabled = true;
+            //render html
+        }
     }
 
     const connectToNewUser = (userId, stream, myPeer) => {
@@ -96,6 +124,11 @@ const Meeting = (props) => {
             video: true,
             audio: true
         }).then(stream => {
+
+            stream.getAudioTracks()[0].enabled = location.state.currentAudioState;
+            stream.getVideoTracks()[0].enabled = location.state.currentVideoState;
+
+            setStream(stream)
             addVideoStream(myVideo, stream)
 
             myPeer.on('call', call => {
@@ -146,9 +179,9 @@ const Meeting = (props) => {
                         <i class="fas fa-ellipsis-h media-icon two"></i>
                     </div>
                     <div class='mute'>
-                        <i class="far fa-microphone media-icon three"></i>
+                        <i class="far fa-microphone media-icon three" onClick = { handleAudioClick } ></i>
                         <i class="far fa-phone media-icon four"></i>
-                        <i class="far fa-video media-icon five"></i>
+                        <i class="far fa-video media-icon five" onClick = { handleVideoClick } ></i>
                     </div>
                     <div>
                         <i class="fas fa-user-friends media-icon six"></i>
