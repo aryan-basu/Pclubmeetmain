@@ -45,7 +45,6 @@ function a11yProps(index) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.paper,
     width: 500,
   },
 }));
@@ -84,10 +83,10 @@ export default function FullWidthTabs() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <div className="input">
+        <div className="input-chat">
             <div className="display"></div>
             <Input 
-              class='chat-input'
+              placeholder='Type here'
               endAdornment={
                 <InputAdornment position="end" >
                   <IconButton
@@ -101,8 +100,21 @@ export default function FullWidthTabs() {
           </div>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Participants
-          
+        <div className="input-chat">
+            <div className="display"></div>
+            <Input 
+              placeholder='Type here'
+              endAdornment={
+                <InputAdornment position="end" >
+                  <IconButton
+                  id='send'
+                  >
+                   <SendIcon/>
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+          </div>
         </TabPanel>
       </SwipeableViews>
     </div>
